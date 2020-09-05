@@ -2,7 +2,7 @@
 
 # Configurables
 PLYMOUTH_DIR=/usr/share/plymouth/themes
-PLYMOUTH_THEME=plymouth-bgrt
+PLYMOUTH_THEME=plymouth-modern-bgrt
 
 # Sanity Checks
 if [[ ! -r /sys/firmware/acpi/bgrt/image ]]; then
@@ -29,9 +29,9 @@ convert /sys/firmware/acpi/bgrt/image theme/bgrt.png
 # Finally, install the theme
 
 install -d ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}
-install -m644 theme/plymouth-bgrt.plymouth ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}/
+install -m644 theme/plymouth-modern-bgrt.plymouth ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}/
 install -m644 theme/bgrt.{script,png} ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}/
-install -m644 theme/{box,bullet,entry,lock,progress_{bar,box}}.png ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}/
+install -m644 theme/{box,bullet,progress_{bar,box}}.png ${PLYMOUTH_DIR}/${PLYMOUTH_THEME}/
 
 [ -d /lib/lsb/init-functions.d ] && install -m644 scripts/init-functions /lib/lsb/init-functions.d/999-bgrt
 [ -d /etc/initramfs-tools/hooks ] && install -m755 scripts/initramfs-hook /etc/initramfs-tools/hooks/bgrt-fonts

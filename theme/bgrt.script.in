@@ -20,11 +20,6 @@ bgrt_sprite.SetPosition($BGRTLEFT$, $BGRTTOP$, 1);
 # Plymouth.SetMessageFunction: the callback function is called when new message should be displayed. First arg is message to display. [IMPLEMENTED]
 
 
-
-
-
-
-
 fun refresh_callback ()
 {
 # Currently we do nothing here
@@ -39,43 +34,23 @@ status = "normal";
 fun dialog_setup()
 {
 	local.box;
-	local.lock;
-	local.entry;
 
 	box.image = Image("box.png");
-	lock.image = Image("lock.png");
-	entry.image = Image("entry.png");
-
 	box.sprite = Sprite(box.image);
+
 	box.x = Window.GetWidth()  * 0.50 - box.image.GetWidth ()/2;
 	box.y = Window.GetHeight() * 0.75 - box.image.GetHeight()/2;
 	box.z = 10000;
 	box.sprite.SetPosition(box.x, box.y, box.z);
 
-	lock.sprite = Sprite(lock.image);
-	lock.x = box.x + box.image.GetWidth()/2 - (lock.image.GetWidth() + entry.image.GetWidth()) / 2;
-	lock.y = box.y + box.image.GetHeight()/2 - lock.image.GetHeight()/2;
-	lock.z = box.z + 1;
-	lock.sprite.SetPosition(lock.x, lock.y, lock.z);
-
-	entry.sprite = Sprite(entry.image);
-	entry.x = lock.x + lock.image.GetWidth();
-	entry.y = box.y + box.image.GetHeight()/2 - entry.image.GetHeight()/2;
-	entry.z = box.z + 1;
-	entry.sprite.SetPosition(entry.x, entry.y, entry.z);
-
 	global.dialog.box = box;
-	global.dialog.lock = lock;
-	global.dialog.entry = entry;
 	global.dialog.bullet_image = Image("bullet.png");
 	dialog_opacity (1);
 }
 
-fun dialog_opacity(opacity)
+fun dialog_opacity (opacity)
 {
 	dialog.box.sprite.SetOpacity (opacity);
-	dialog.lock.sprite.SetOpacity (opacity);
-	dialog.entry.sprite.SetOpacity (opacity);
 	for (index = 0; dialog.bullet[index]; index++)
 	{
 		dialog.bullet[index].sprite.SetOpacity(opacity);
@@ -101,9 +76,9 @@ fun display_password_callback (prompt, bullets)
 		if (!dialog.bullet[index])
 		{
 			dialog.bullet[index].sprite = Sprite(dialog.bullet_image);
-			dialog.bullet[index].x = dialog.entry.x + index * dialog.bullet_image.GetWidth();
-			dialog.bullet[index].y = dialog.entry.y + dialog.entry.image.GetHeight() / 2 - dialog.bullet_image.GetHeight() / 2;
-			dialog.bullet[index].z = dialog.entry.z + 1;
+			dialog.bullet[index].x = dialog.box.x + 6 + index * dialog.bullet_image.GetWidth();
+			dialog.bullet[index].y = dialog.box.y + dialog.box.image.GetHeight() / 2 - dialog.bullet_image.GetHeight() / 2;
+			dialog.bullet[index].z = dialog.box.z + 1;
 			dialog.bullet[index].sprite.SetPosition(dialog.bullet[index].x, dialog.bullet[index].y, dialog.bullet[index].z);
 		}
 		if (index < bullets)
@@ -163,7 +138,7 @@ fun message_callback (text)
 	my_image = Image.Text(text, 1, 1, 1, 1, "Exo Regular 12");
 	message_sprite.SetImage(my_image);
 
-# HCenter, VNearTop
+  # HCenter, VNearTop
 	x = (Window.GetWidth()  * 0.50) - (message_sprite.GetImage().GetWidth()  / 2);
 	y = (Window.GetHeight() * 0.05) - (message_sprite.GetImage().GetHeight() / 2);
 	message_sprite.SetPosition(x, Math.Clamp(y, 1, Window.GetHeight()), 0);
@@ -273,4 +248,5 @@ fun scroll_message_callback(text) {
 	}
 }
 
-Plymouth.SetUpdateStatusFunction(scroll_message_callback);
+// Uncomment if you want the status messages
+#Plymouth.SetUpdateStatusFunction(scroll_message_callback);
