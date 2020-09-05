@@ -8,6 +8,12 @@ You may want to tweak your kernel parameters to have a smooth transition from th
 On intel graphics, this is done by passing the `i915.fastboot=1` parameter. I would advise to add it to your bootloader
 AFTER testing if it works, for example in GRUB by pressing `e` to edit the boot entry for one time only.
 
+## Screenshot
+
+Running on my ThinkPad T440p, with a custom BIOS logo. Booting an encrypted root partition with a passphrase prompt.
+
+![Screenshot](./preview.png)
+
 ## Installation
 
 ```sh
